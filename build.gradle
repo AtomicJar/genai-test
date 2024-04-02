@@ -1,0 +1,59 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.3'
+	id 'io.spring.dependency-management' version '1.1.4'
+	id 'io.franzbecker.gradle-lombok' version '5.0.0'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '21'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+lombok {
+	version = '1.18.30'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+	testImplementation 'io.projectreactor:reactor-test'
+
+	implementation platform('dev.langchain4j:langchain4j-bom:0.29.1')
+	implementation 'dev.langchain4j:langchain4j'
+	implementation 'dev.langchain4j:langchain4j-core'
+	implementation 'dev.langchain4j:langchain4j-anthropic'
+	implementation 'dev.langchain4j:langchain4j-ollama'
+	implementation 'dev.langchain4j:langchain4j-open-ai'
+	implementation 'dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2-q'
+	implementation 'dev.langchain4j:langchain4j-pgvector'
+
+	testImplementation platform('org.testcontainers:testcontainers-bom:1.19.7')
+	testImplementation 'org.testcontainers:testcontainers'
+	testImplementation 'org.testcontainers:postgresql'
+	testImplementation 'org.testcontainers:ollama'
+	testImplementation 'com.github.docker-java:docker-java-api:3.3.6'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+tasks.register('run', JavaExec) {
+	classpath = sourceSets.test.runtimeClasspath
+	mainClass = 'com.example.ragchat.TestRagChatApplication'
+}

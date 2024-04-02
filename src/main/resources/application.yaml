@@ -1,0 +1,28 @@
+spring:
+  profiles:
+    default: ollama
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
+ollama:
+  base-url: http://localhost:11434
+  model: llama2
+  containerized: true
+
+openai:
+  model: gpt-3.5-turbo
+  api-key: demo
+
+validator:
+  base-url: http://localhost:11434
+  model: phi
+  containerized: true
+
+logging:
+  level:
+    dev.langchain4j: Trace
+
+embeddings:
+  knowledge: src/main/resources/knowledge/

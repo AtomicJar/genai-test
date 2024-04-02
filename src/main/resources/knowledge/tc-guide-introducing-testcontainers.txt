@@ -1,0 +1,106 @@
+---
+title: "What is Testcontainers, and why should you use it?"
+date: 2023-02-08T09:39:58+05:30
+draft: false
+description: This guide will introduce you to Testcontainers and explains what kind of problems Testcontainers solves.
+repo: https://github.com/testcontainers/tc-guide-introducing-testcontainers
+tags:
+  - getting-started
+---
+:toc:
+:toclevels: 2
+:codebase: https://raw.githubusercontent.com/testcontainers/tc-guide-introducing-testcontainers/main
+
+Modern software systems tackle complex business problems by leveraging various technologies and tools.
+Nowadays, hardly any software system works in isolation; they usually talk to databases, messaging systems,
+and cache providers and interact with many other 3rd party services. In today’s highly competitive market,
+time-to-market is crucial. Businesses want to put their product on the market as soon as possible, get feedback and iterate on it.
+To achieve that aspect of agility, one should have a solid Continuous Integration and Continuous Deployment (CI/CD) process.
+A crucial part of the CI/CD process is automated testing to ensure the correctness of the application behavior.
+
+While Unit Testing helps in testing the business logic and implementation details by isolating from external services like databases,
+messaging systems etc., the bulk of the application code might still be in integrating with those external services.
+To be fully confident with our application, we should write integration tests along with unit tests to ensure that
+our application is fully functional.
+
+Historically Integration testing is considered difficult because of the challenges in maintaining an "integration testing environment".
+Integration testing with pre-provisioned infrastructure is challenging because of the following reasons:
+
+* Before running tests, you must ensure that the infrastructure is up and running and data is pre-configured in a specific desired state.
+* If multiple build pipelines run in parallel, then one test execution might interfere with other test data,
+  therefore resulting in flaky tests or other issues of test pollution.
+
+Due to the challenges mentioned above, some people lean towards using services with in-memory or embedded variations of
+the required services for integration testing. For example, if an application uses the Postgres database,
+then H2 in-memory database is used as a substitute for testing. While this is an improvement over not writing integration tests at all,
+using mocks or in-memory versions of those services brings its own problems:
+
+* *In-memory services may not have all the features of your production service.*
+  For example, you might be using advanced features of Postgres/Oracle databases in your application.
+  But H2 might not support all those features in order to use it for integration testing.
+  In the worst case, this might even lead to developers being cautious of adopting powerful features of those systems
+  because of issues with replicating this functionality with the corresponding substitutes.
+
+* *In-memory services delay the feedback cycle*. For example, you might have written an SQL query and tested it with
+  an H2 in-memory database which is working fine. But after deploying the application,
+  you may realize the query syntax works fine for H2 but not with your production database Postgres/Oracle.
+  Or maybe you have to maintain multiple different implementations to mitigate this issue?
+  This kind of testing effectively defeats the purpose of testing, which is to get faster feedback cycles on my changes.
+
+Now, welcome to the wonderful world of Testcontainers, where integration testing with real services is not only possible
+but also as easy as writing unit tests 🙂
+
+== What is Testcontainers?
+
+Testcontainers is a testing library that provides easy and lightweight APIs for bootstrapping integration tests with real services
+wrapped in Docker containers. Using Testcontainers, you can write tests talking to the same type of services you use in production
+without mocks or in-memory services.
+
+A typical Testcontainers-based integration test works as follows:
+
+* *Before Tests:*
+    ** Start your required services (databases, messaging systems etc.) docker containers using Testcontainers API.
+    ** Configure or update your application configuration to use these containerized services.
+* *During Tests:*
+    ** Your tests will run using these containerized services.
+* *After Tests:*
+    ** Testcontainers will take care of destroying those containers irrespective of whether tests executed successfully or
+    there are any test failures.
+
+image::images/testcontainers-lifecycle-simple-2.png[]
+
+The only requirement to run Testcontainers-based tests is to have a Docker-API compatible container runtime.
+If you have Docker Desktop installed and running, you are good to go.
+For more information on Docker environments supported by Testcontainers refer to https://www.testcontainers.org/supported_docker_environment/.
+
+== What problems does Testcontainers solve?
+Testcontainers solves the integration testing problems mentioned above by enabling us to test our application using real services and
+thereby increasing the confidence level on our code changes.
+
+image::images/testcontainers-dev-ci.png[]
+
+By using Testcontainers:
+
+* You don't need to have a pre-provisioned integration testing infrastructure. The Testcontainers API will provide the required services
+  before running our tests. The code for defining the infrastructure resides directly next to the actual test code.
+* There will be no data conflict issues, even when multiple build pipelines run in parallel because each pipeline runs
+  with an isolated set of services.
+* You can run your integration tests right from your IDE, just like you run unit tests.
+  No need to push your changes and wait for CI to run your integration tests.
+* After test execution, Testcontainers take care of cleaning up the containers automatically.
+
+You can use Testcontainers with many popular programming languages, including *Java*, *.NET*, *Go*, *NodeJS*, *Rust*, and *Python*,
+and more language support on its way.
+
+== Conclusion
+
+We have explored the challenges with integration testing and understood why testing with mocks or in-memory services is not always a good idea.
+Then we talked about how Testcontainers solves the integration testing problem and enables us to test with real services.
+
+You can explore more about Testcontainers at https://www.testcontainers.com/.
+
+== Further Reading
+* https://testcontainers.com/guides/getting-started-with-testcontainers-for-java/[Getting started with Testcontainers for Java]
+* https://testcontainers.com/guides/getting-started-with-testcontainers-for-dotnet/[Getting started with Testcontainers for .NET]
+* https://testcontainers.com/guides/testcontainers-container-lifecycle/[Testcontainers container lifecycle management using JUnit 5]
+* https://testcontainers.com/guides/replace-h2-with-real-database-for-testing/[The simplest way to replace H2 with a real database for testing]
