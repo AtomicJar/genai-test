@@ -1,6 +1,6 @@
 spring:
   profiles:
-    default: ollama
+    default: openai
   jpa:
     hibernate:
       ddl-auto: update
