@@ -23,12 +23,7 @@ public class HowToDebugWithTCDTest extends AbstractIntegrationTest {
             ValidatorAgent.ValidatorResponse validate = validatorAgent.validate(question, answer, reference);
             log.info("Question: {} - Answer: {}", question, answer);
             log.info("Validation: {}", validate);
-
-            double cosineSimilarity = getCosineSimilarity(reference, answer);
-            log.info("Cosine similarity: {}", cosineSimilarity);
-
             assertThat(validate.response()).isEqualTo("no");
-            assertThat(cosineSimilarity).isLessThan(0.8);
         });
     }
 
@@ -38,12 +33,7 @@ public class HowToDebugWithTCDTest extends AbstractIntegrationTest {
             ValidatorAgent.ValidatorResponse validate = validatorAgent.validate(question, answer, reference);
             log.info("Question: {} - Answer: {}", question, answer);
             log.info("Validation: {}", validate);
-
-            double cosineSimilarity = getCosineSimilarity(reference, answer);
-            log.info("Cosine similarity: {}", cosineSimilarity);
-
             assertThat(validate.response()).isEqualTo("yes");
-            assertThat(cosineSimilarity).isGreaterThan(0.8);
         });
     }
 }

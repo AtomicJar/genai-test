@@ -1,6 +1,6 @@
 ## Requirements
 - Java 21 (use [sdkman](https://sdkman.io/))
-- Docker or [TCD](https://testcontainers.com/desktop/)
+- [TCC](https://testcontainers.com/desktop/) and GPU enabled zone
 - OpenAI API key defined in `src/main/resources/application.properties` or provided as an environment variable `OPENAI_API_KEY`
 
 ## Description
