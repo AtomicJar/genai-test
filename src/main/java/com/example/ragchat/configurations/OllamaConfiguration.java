@@ -30,9 +30,9 @@ public class OllamaConfiguration {
     public StreamingChatLanguageModel ollamaStreamingChatLanguageModel() {
         return OllamaStreamingChatModel.builder()
                 .baseUrl(properties.baseUrl())
-                .seed(0)
-                .temperature(0.00000000000001)
-                .topP(0.00000000000001)
+                .seed(42)
+                .temperature(0.0)
+                .topP(0.0)
                 .modelName(properties.model())
                 .timeout(Duration.ofMinutes(2))
                 .build();
@@ -43,9 +43,9 @@ public class OllamaConfiguration {
     public ChatLanguageModel ollamaChatLanguageModel() {
         return OllamaChatModel.builder()
                 .baseUrl(properties.baseUrl())
-                .seed(0)
-                .temperature(0.00000000000001)
-                .topP(0.00000000000001)
+                .seed(42)
+                .temperature(0.0)
+                .topP(0.0)
                 .modelName(properties.model())
                 .timeout(Duration.ofMinutes(2))
                 .build();

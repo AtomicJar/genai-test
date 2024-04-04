@@ -11,13 +11,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HowToInstallTCDTest extends AbstractIntegrationTest {
 
     static String question = "How I can install Testcontainers Desktop?";
-    static String reference = """                    
-                    You can go to https://testcontainers.com/desktop/ and download your OS-specific client application and install it.
-                    If you are using MacOS, then you can install the Testcontainers Desktop app easily using
-                    *brew install atomicjar/tap/testcontainers-desktop* command.
-                    ===
-                    Important: the download url must be included in the answer to be considered correct.
-                    """;
+    static String reference = """
+            - Answer must indicate to download Testcontainers Desktop from https://testcontainers.com/desktop/
+            - Answer must indicate to use brew to install Testcontainers Desktop in MacOS
+            - Answer must be less than 5 sentences
+            """;
 
     @Test
     void verifyStraightAgentFailsToAnswerHowToInstallTCD() {

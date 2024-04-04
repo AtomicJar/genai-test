@@ -29,9 +29,9 @@ public class OpenAIConfiguration {
         return OpenAiStreamingChatModel.builder()
                 .apiKey(properties.apiKey())
                 .modelName(properties.model())
-                .seed(0)
-                .temperature(0.00000000000001)
-                .topP(0.00000000000001)
+                .seed(42)
+                .temperature(0.0)
+                .topP(0.0)
                 .build();
     }
 
@@ -41,9 +41,9 @@ public class OpenAIConfiguration {
         return OpenAiChatModel.builder()
                 .apiKey(properties.apiKey())
                 .modelName(properties.model())
-                .seed(0)
-                .temperature(0.00000000000001)
-                .topP(0.00000000000001)
+                .seed(42)
+                .temperature(0.0)
+                .topP(0.0)
                 .build();
     }
 

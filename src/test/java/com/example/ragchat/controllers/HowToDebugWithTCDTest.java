@@ -12,13 +12,14 @@ public class HowToDebugWithTCDTest extends AbstractIntegrationTest {
 
     static String question = "How I can find the random port of a Testcontainer to connect to it?";
     static String reference = """
-            The response *must not* mention using getMappedPort() method to find the random port of a Testcontainer.
-            Instead it *must* indicate that you can use the Testcontainers Desktop app to configure fixed port.
-            This way, you can connect to the container using the fixed port, without worrying about the random port.
+            - Answer must not mention using getMappedPort() method to find the random port of a Testcontainer
+            - Answer must mention that you don't need to find the random port of a Testcontainer to connect to it
+            - Answer must indicate that you can use the Testcontainers Desktop app to configure fixed port
+            - Answer must be less than 5 sentences
             """;
 
     @Test
-    void verifyStraightAgentFailsToAnswerHowToInstallTCD() {
+    void verifyStraightAgentFailsToAnswerHowToDebugWithTCD() {
         verify(question, "/chat/straight", (answer) -> {
             ValidatorAgent.ValidatorResponse validate = validatorAgent.validate(question, answer, reference);
             log.info("Question: {} - Answer: {}", question, answer);
@@ -28,7 +29,7 @@ public class HowToDebugWithTCDTest extends AbstractIntegrationTest {
     }
 
     @Test
-    void verifyRaggedAgentSucceedToAnswerHowToInstallTCD() {
+    void verifyRaggedAgentSucceedToAnswerHowToDebugWithTCD() {
         verify(question, "/chat/rag", (answer) -> {
             ValidatorAgent.ValidatorResponse validate = validatorAgent.validate(question, answer, reference);
             log.info("Question: {} - Answer: {}", question, answer);

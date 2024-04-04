@@ -17,7 +17,6 @@ public interface ValidatorAgent {
                 - Respond with 'no' if the answer is incorrect
                 - If you are unsure, simply respond with 'unsure'
                 - Respond with 'no' if the answer is not clear or concise
-                - Respond with 'no' if the answer has more than 3-4 sentences
                 - Respond with 'no' if the answer is not based on the reference
                 
                 Your response must be a json object with the following structure:
