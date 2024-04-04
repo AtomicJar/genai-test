@@ -23,9 +23,9 @@ public class ValidatorAgentConfiguration {
                 .chatLanguageModel(OpenAiChatModel.builder()
                         .apiKey(properties.apiKey())
                         .modelName(OpenAiChatModelName.GPT_4)
-                        .seed(0)
-                        .temperature(0.00000000000001)
-                        .topP(0.00000000000001)
+                        .seed(42)
+                        .temperature(0.0)
+                        .topP(0.0)
                         .build())
                 .build();
     }
