@@ -27,19 +27,6 @@ public class OllamaConfiguration {
 
     @Bean
     @Qualifier("ollama")
-    public StreamingChatLanguageModel ollamaStreamingChatLanguageModel() {
-        return OllamaStreamingChatModel.builder()
-                .baseUrl(properties.baseUrl())
-                .seed(42)
-                .temperature(0.0)
-                .topP(0.0)
-                .modelName(properties.model())
-                .timeout(Duration.ofMinutes(2))
-                .build();
-    }
-
-    @Bean
-    @Qualifier("ollama")
     public ChatLanguageModel ollamaChatLanguageModel() {
         return OllamaChatModel.builder()
                 .baseUrl(properties.baseUrl())

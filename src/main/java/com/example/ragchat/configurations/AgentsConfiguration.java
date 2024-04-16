@@ -16,19 +16,19 @@ import org.springframework.context.annotation.Configuration;
 public class AgentsConfiguration {
 
     @Bean(name = "ragged")
-    ChatAgent ragged(StreamingChatLanguageModel streamingChatLanguageModel,
+    ChatAgent ragged(ChatLanguageModel chatLanguageModel,
                      ContentRetriever contentRetriever) {
         return AiServices.builder(ChatAgent.class)
-                .streamingChatLanguageModel(streamingChatLanguageModel)
+                .chatLanguageModel(chatLanguageModel)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
                 .contentRetriever(contentRetriever)
                 .build();
     }
 
     @Bean(name = "straight")
-    ChatAgent straight(StreamingChatLanguageModel streamingChatLanguageModel) {
+    ChatAgent straight(ChatLanguageModel chatLanguageModel) {
         return AiServices.builder(ChatAgent.class)
-                .streamingChatLanguageModel(streamingChatLanguageModel)
+                .chatLanguageModel(chatLanguageModel)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(20))
                 .build();
     }

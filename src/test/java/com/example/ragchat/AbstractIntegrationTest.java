@@ -1,16 +1,12 @@
 package com.example.ragchat;
 
-import com.example.ragchat.controllers.ChatController;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.output.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.reactive.server.WebTestClient;
-import reactor.test.StepVerifier;
-
-import java.util.function.Consumer;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 
 @SpringBootTest(
         classes = {
@@ -27,7 +23,7 @@ import java.util.function.Consumer;
 public abstract class AbstractIntegrationTest {
 
     @Autowired
-    protected WebTestClient webTestClient;
+    protected TestRestTemplate restTemplate;
 
     @Autowired
     protected ValidatorAgent validatorAgent;
@@ -51,21 +47,5 @@ public abstract class AbstractIntegrationTest {
             normB += Math.pow(vectorB[i], 2);
         }
         return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
-    }
-
-    protected void verify(String question, String url, Consumer<String> consumer) {
-        webTestClient
-                .get()
-                .uri(url + "?question=" + question)
-                .exchange()
-                .expectStatus()
-                .isOk()
-                .returnResult(ChatController.ChatResponse.class)
-                .getResponseBody()
-                .map(ChatController.ChatResponse::message)
-                .reduce((s1, s2) -> s1 + s2)
-                .as(StepVerifier::create)
-                .assertNext(consumer)
-                .verifyComplete();
     }
 }

@@ -31,40 +31,14 @@ function App() {
 
     const sendMessageToPath = (path, setter)=> {
         const temporalMessage = [...messages, {text: input.trim(), sender: 'user'}];
-        fetch(`${path}?question=${input}`, {
-            headers: {
-                'Accept': 'application/x-ndjson'
-            }
-        })
-            .then(response => {
-                const stream = response.body;
-                const reader = stream.getReader();
-                if (!reader) {
-                    setLoading(false)
-                    return;
-                }
-                let answer = "";
-
-                reader.read().then(function pump({value, done}) {
-                    if (done) {
-                        return;
-                    }
-
-                    const decoder = new TextDecoder();
-                    decoder.decode(value).split("\n").filter(line => line.trim() !== '').forEach((line) => {
-                        const response = JSON.parse(line);
-                        answer += response.message;
-                        setter(() => [...temporalMessage, {text: answer, sender: 'ai'}]);
-                    });
-
-                    // Read some more, and call this function again
-                    return reader.read().then(pump);
-                })
+        fetch(`${path}?question=${input}`)
+            .then((response) => response.json())
+            .then((chatResponse) => {
+                setter([...temporalMessage, {text: chatResponse.message, sender: 'ai'}]);
             })
             .catch(error => console.log(error))
             .finally(() => setLoading(false));
     }
-
 
     if (loading) return (<div>Loading...</div>);
 
