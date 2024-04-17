@@ -15,5 +15,5 @@ public interface ChatAgent {
                 - Use the information provided to answer, do not make up information
                 - Important: Do not mention that you have been provided with additional information or documents
                 """)
-    TokenStream chat(String userMessage);
+    String chat(String userMessage);
 }

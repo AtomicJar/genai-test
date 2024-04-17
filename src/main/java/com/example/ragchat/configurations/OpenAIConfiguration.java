@@ -1,9 +1,7 @@
 package com.example.ragchat.configurations;
 
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
-import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,18 +20,6 @@ import org.springframework.validation.annotation.Validated;
 public class OpenAIConfiguration {
 
     final OpenAIProperties properties;
-
-    @Bean
-    @Qualifier("openai")
-    public StreamingChatLanguageModel openAIStreamingChatLanguageModel() {
-        return OpenAiStreamingChatModel.builder()
-                .apiKey(properties.apiKey())
-                .modelName(properties.model())
-                .seed(42)
-                .temperature(0.0)
-                .topP(0.0)
-                .build();
-    }
 
     @Bean
     @Qualifier("openai")
