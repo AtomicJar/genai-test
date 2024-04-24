@@ -29,6 +29,8 @@ To address this, the proposed solution involves using one LLM to assess the adeq
 ```
 The `ValidatorAgent` is an [AI Service](https://docs.langchain4j.dev/tutorials/ai-services/) responsible for validating the answers. It will verify if the answer is correct or not based on the reference provided.
 
+Learn more about the details in the blog post: [A Promising Methodology for Testing GenAI Applications in Java](https://www.docker.com/blog/testing-genai-applications-in-java/)
+
 ## How to run tests
 ```shell
 ./gradlew test
